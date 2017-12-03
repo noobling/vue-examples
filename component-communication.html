@@ -1,0 +1,47 @@
+<!DOCTYPE>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.css">
+</head>
+<body>
+    
+    <div id="root" class="container">
+
+        <coupon v-on:applied="couponapplied=true"></coupon>
+
+        <h1 v-show="couponapplied">Coupon applied!</h1>
+    </div>
+    
+
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        
+        Vue.component('coupon', {
+            template: '<input v-on:blur="couponapplied">',
+
+            methods: {
+                couponapplied() {
+                    this.$emit('applied');
+                }
+            }
+        });
+
+        new Vue({
+            el: '#root',
+
+            data: {
+                couponapplied: false
+            }
+
+
+        });
+
+    </script>
+</body>
+</html>
