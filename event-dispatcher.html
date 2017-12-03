@@ -1,0 +1,68 @@
+<!DOCTYPE>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.css">
+</head>
+<body>
+    
+    <div id="root" class="container">
+
+        <coupon v-on:applied="couponapplied=true"></coupon>
+
+        <h1 v-show="couponapplied">Coupon applied!</h1>
+    </div>
+    
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+
+        /** The event dispatcher accessible from any part of the app to 
+        * to either emit or listen to an event from any component (i.e.not bound to parent child components)
+        */
+        window.Event = new class {
+            constructor() {
+                this.vue = new Vue();
+            }
+            // our own wrapper/adapter to the $emit method
+            fire (event, data = null) {
+                this.vue.$emit(event, data);
+            }
+            // our own wrapper/adapter to the $on method
+            listen(event, callback) {
+                this.vue.$on(event, callback);
+            }
+        }       
+
+        
+        Vue.component('coupon', {
+            template: '<input v-on:blur="couponapplied">',
+
+            methods: {
+                couponapplied() {
+                    Event.fire('applied');
+                }
+            }
+        });
+
+        new Vue({
+            el: '#root',
+
+            data: {
+                couponapplied: false
+            },
+
+            created() {
+                Event.listen('applied', () => alert('Detected the `applied` emission'));
+            }
+
+
+        });
+
+    </script>
+</body>
+</html>
