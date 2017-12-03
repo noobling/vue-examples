@@ -1,0 +1,57 @@
+<!--
+    Apparently these are really good if you just want some specific html that will only
+    exists for a specific page. Vue recommends agains this but Jeff says this is useful
+    for server sided applications.
+-->
+
+<!DOCTYPE>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.css">
+    <style>
+        body {
+            padding-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="root" class="container">
+
+        <progress-rate inline-template>
+            <div>
+                <h1>Your progress rate is {{userProgress}} %</h1>
+
+                <button v-on:click="userProgress += 10">Increase your progress</button>
+            </div>
+        </progress-rate>
+     
+    </div>
+    
+
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+
+        Vue.component('progress-rate', {
+
+            data() {
+                return {
+                    userProgress: 50
+                }
+            }
+
+        })
+        
+
+        new Vue({
+            el: '#root'
+        })
+
+    </script>
+</body>
+</html>
